@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: easyuiHeader('费率配置列表')"/>
+</head>
+<body class="easyui-layout">
+<div id="toolbar">
+    <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <p>字段名：</p>
+                                <input type="text" class="easyui-textbox"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm"
+                                   shiro:hasPermission="business:tmsRate:list"><i
+                                        class="fa fa-search"></i> 搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                        class="fa fa-refresh"></i> 重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-sm-12 search-collapse">
+                <a href="javascript:void(0)" id="btnAdd" class="easyui-linkbutton info"
+                   shiro:hasPermission="business:tmsRate:add" data-options="iconCls:'fa fa-plus'">新增</a>
+                <a href="javascript:void(0)" id="btnEdit" class="easyui-linkbutton success"
+                   shiro:hasPermission="business:tmsRate:edit" data-options="iconCls:'fa fa-edit'">修改</a>
+                <a href="javascript:void(0)" id="btnRemove" class="easyui-linkbutton warning"
+                   shiro:hasPermission="business:tmsRate:remove" data-options="iconCls:'fa fa-minus'">删除</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div data-options="region:'center',iconCls:'icon-ok',border:false" style="overflow:hidden">
+    <table id="List"></table>
+</div>
+<div th:include="include :: easyuiFooter"></div>
+<script th:inline="javaScript">
+    var editFlag = [[${@permission.hasPermi('business:tmsRate:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('business:tmsRate:remove')}]];
+    alert(editFlag)
+</script>
+<script th:inline="none">
+
+    alert(editFlag)
+    var prefix = ctx + "business/tmsRate";
+
+    $(function () {
+
+        var options = {
+            id: "List",
+            url: prefix + "/list",
+            columns: [{
+                field: 'id',
+                title: '费率',
+                width: 80
+            },
+                {
+                    field: 'companyId',
+                    title: '公司ID',
+                    width: 80
+                },
+
+                {
+                    field: 'rateType',
+                    title: '费率类型：B-保费费率；D-代收款费率',
+                    width: 80
+                },
+
+                {
+                    field: 'rate',
+                    title: '费率',
+                    width: 80
+                },
+
+                {
+                    field: 'remark',
+                    title: '描述',
+                    width: 80
+                },
+
+                {
+                    field: 'createBy',
+                    title: '创建者',
+                    width: 80
+                },
+
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    width: 80
+                },
+
+                {
+                    field: 'updateBy',
+                    title: '更新者',
+                    width: 80
+                },
+
+                {
+                    field: 'updateTime',
+                    title: '更新时间',
+                    width: 80
+                }]
+        };
+        $.table.init(options);
+    });
+</script>
+</body>
+</html>

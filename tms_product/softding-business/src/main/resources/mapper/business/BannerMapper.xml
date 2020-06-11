@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softding.business.banner.mapper.BannerMapper">
+    
+    <resultMap type="Banner" id="BannerResult">
+        <result property="id"    column="id"    />
+        <result property="imagePath"    column="image_path"    />
+        <result property="state"    column="state"    />
+        <result property="sort"    column="sort"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="addUser"    column="add_user"    />
+        <result property="editTime"    column="edit_time"    />
+        <result property="editUser"    column="edit_user"    />
+    </resultMap>
+
+    <sql id="selectBannerVo">
+        select id, image_path, state, sort, add_time, add_user, edit_time, edit_user from ws_banner
+    </sql>
+
+    <select id="selectBannerList" parameterType="Banner" resultMap="BannerResult">
+        <include refid="selectBannerVo"/>
+        <where>  
+            <if test="imagePath != null  and imagePath != ''"> and image_path = #{imagePath}</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="addUser != null  and addUser != ''"> and add_user = #{addUser}</if>
+            <if test="editTime != null "> and edit_time = #{editTime}</if>
+            <if test="editUser != null  and editUser != ''"> and edit_user = #{editUser}</if>
+        </where>
+    </select>
+    
+    <select id="selectBannerById" parameterType="Long" resultMap="BannerResult">
+        <include refid="selectBannerVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBanner" parameterType="Banner" useGeneratedKeys="true" keyProperty="id">
+        insert into ws_banner
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="imagePath != null  and imagePath != ''">image_path,</if>
+            <if test="state != null ">state,</if>
+            <if test="sort != null ">sort,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="addUser != null  and addUser != ''">add_user,</if>
+            <if test="editTime != null ">edit_time,</if>
+            <if test="editUser != null  and editUser != ''">edit_user,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="imagePath != null  and imagePath != ''">#{imagePath},</if>
+            <if test="state != null ">#{state},</if>
+            <if test="sort != null ">#{sort},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="addUser != null  and addUser != ''">#{addUser},</if>
+            <if test="editTime != null ">#{editTime},</if>
+            <if test="editUser != null  and editUser != ''">#{editUser},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBanner" parameterType="Banner">
+        update ws_banner
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="imagePath != null  and imagePath != ''">image_path = #{imagePath},</if>
+            <if test="state != null ">state = #{state},</if>
+            <if test="sort != null ">sort = #{sort},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="addUser != null  and addUser != ''">add_user = #{addUser},</if>
+            <if test="editTime != null ">edit_time = #{editTime},</if>
+            <if test="editUser != null  and editUser != ''">edit_user = #{editUser},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBannerById" parameterType="Long">
+        delete from ws_banner where id = #{id}
+    </delete>
+
+    <delete id="deleteBannerByIds" parameterType="String">
+        delete from ws_banner where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

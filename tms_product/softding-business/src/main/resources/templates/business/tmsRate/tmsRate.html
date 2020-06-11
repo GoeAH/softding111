@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: easyuiHeader('费率配置列表')"/>
+</head>
+<body class="easyui-layout">
+<div id="toolbar">
+    <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="searchForm">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <p>字段名：</p>
+                                <input type="text" name="fieldName" class="easyui-textbox"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" id="btnSearch" shiro:hasPermission="business:tmsRate:list"><i
+                                        class="fa fa-search"></i> 搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" id="btnReset" onclick="$.form.reset('searchForm')"><i
+                                        class="fa fa-refresh"></i> 重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-sm-12 search-collapse">
+                <a href="javascript:void(0)" id="btnAdd" class="easyui-linkbutton info"
+                   shiro:hasPermission="business:tmsRate:add" data-options="iconCls:'fa fa-plus'">新增</a>
+                <a href="javascript:void(0)" id="btnEdit" class="easyui-linkbutton success"
+                   shiro:hasPermission="business:tmsRate:edit" data-options="iconCls:'fa fa-edit'">修改</a>
+                <a href="javascript:void(0)" id="btnRemove" class="easyui-linkbutton warning"
+                   shiro:hasPermission="business:tmsRate:remove" data-options="iconCls:'fa fa-minus'">删除</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div data-options="region:'center',iconCls:'icon-ok',border:false" style="overflow:hidden">
+    <table id="List"></table>
+</div>
+<div th:include="include :: easyuiFooter"></div>
+
+<script th:inline="none">
+    var prefix = ctx + "business/tmsRate";
+    $(function () {
+
+        var options = {
+            id:"List",
+            url: prefix + "/list",
+            columns: [
+                {
+                    field: 'id',
+                    title: '费率',
+                    width: 80
+                },
+                {
+                    field: 'companyId',
+                    title: '公司ID',
+                    width: 80
+                },
+                {
+                    field: 'rateType',
+                    title: '费率类型：B-保费费率；D-代收款费率',
+                    width: 80
+                },
+                {
+                    field: 'rate',
+                    title: '费率',
+                    width: 80
+                },
+                {
+                    field: 'remark',
+                    title: '描述',
+                    width: 80
+                },
+                {
+                    field: 'createBy',
+                    title: '创建者',
+                    width: 80
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    width: 80
+                },
+                {
+                    field: 'updateBy',
+                    title: '更新者',
+                    width: 80
+                },
+                {
+                    field: 'updateTime',
+                    title: '更新时间',
+                    width: 80
+                },
+            ]
+        };
+        $.table.init(options);
+        //查询
+        $('#btnSearch').click(function () {
+            var queryParams =  $.common.formToJSON("searchForm")
+            var opts = $('#List').datagrid("options");
+            opts.queryParams = queryParams;
+            $('#List').datagrid("load");
+        })
+        //新增
+        $('#btnAdd').click(function () {
+            $.modal.dialog("添加", prefix + "/add", '50%', '50%');
+        });
+        //修改
+        $('#btnEdit').click(function () {
+            var row = $('#List').datagrid('getSelected');
+            if (row == null) {
+                $.modal.alertWarning("请选中需要修改的信息");
+                return;
+            }
+            $.modal.dialog("修改", prefix + "/edit/" + row.id, '50%', '50%');
+        });
+        //删除
+        $('#btnRemove').click(function () {
+            var row = $('#List').datagrid('getSelected');
+            if (row == null) {
+                $.modal.alertWarning("请选中需要删除的信息");
+                return;
+            }
+            $.operate.remove({
+                url: prefix + "/remove",
+                param: {ids: row.id},
+                success: function (data) {
+                    $.modal.alert(data.msg, function () {
+                        $.table.refresh("List");
+                    });
+                }
+            });
+        })
+    });
+
+</script>
+</body>
+</html>

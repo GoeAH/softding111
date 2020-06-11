@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>登录鼎软系统</title>
+    <meta name="description" content="鼎软后台管理框架">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link href="../static/css/login.min.css" th:href="@{/css/login.min.css}" rel="stylesheet"/>
+    <link href="../static/softding/css/softding-ui.css" th:href="@{/static/softding/css/softding-ui.css?v=4.1.0}" rel="stylesheet"/>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link rel="shortcut icon" href="../static/favicon.ico" th:href="@{favicon.ico}"/>
+    <style type="text/css">label.error {
+        position: inherit;
+    }</style>
+    <style type="text/css">
+        label.error {
+            position: inherit;
+        }
+
+        .top_div {
+            width: 100%;
+            height: 60px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.498039);
+        }
+
+        #LoginTopLine {
+            width: 100%;
+            font-weight: 700;
+        }
+
+        #LoginTopLine {
+            font-size: 30px;
+            color: white;
+            line-height: 60px;
+        }
+    </style>
+    <script>
+        if (window.top !== window.self) {
+            window.top.location = window.location
+        }
+        ;
+    </script>
+</head>
+
+<body class="signin">
+<div class="top_div">
+    <table>
+        <tbody>
+        <tr>
+            <td style="width:100px;"></td>
+            <td style="width:65px;">
+                <div style="width:63px; overflow:hidden;"></div>
+            </td>
+            <td>
+                <div id="LoginTopLine">**********平台</div>
+            </td>
+            <td>
+
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="signinpanel">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="signin-info">
+
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <form id="signupForm">
+                <input type="text" name="username" class="form-control uname" placeholder="用户名" value="admin"/>
+                <input type="password" name="password" class="form-control pword" placeholder="密码" value="admin123"/>
+                <div class="row m-t" th:if="${captchaEnabled==true}">
+                    <div class="col-xs-6">
+                        <input type="text" name="validateCode" class="form-control code" placeholder="验证码" maxlength="5"
+                               autocomplete="off">
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="javascript:void(0);" title="点击更换验证码">
+                            <img th:src="@{captcha/captchaImage(type=${captchaType})}" class="imgcode" width="85%"/>
+                        </a>
+                    </div>
+                </div>
+                <div class="checkbox-custom" th:classappend="${captchaEnabled==false} ? 'm-t'">
+                    <input type="checkbox" id="rememberme" name="rememberme"> <label for="rememberme">记住我</label>
+                </div>
+                <button class="btn btn-success btn-block" id="btnSubmit" data-loading="正在验证登录，请稍后...">登录</button>
+            </form>
+        </div>
+        <div class="col-sm-3">
+            <div class="signin-info">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div style="background: rgba(0, 0, 0, 0.498039); color: #e4ff15;height: 40px; width: 100%; text-align: center; line-height: 40px; bottom: 0; position: absolute;font-size:15px;">
+    鼎软天下，您身边的高端软件定制化开发专家！袁经理13153033937（微信同号）<a href="http://www.softding.com"
+                                                style="color:#e4ff15;text-decoration:inherit" target="_blank">http://www.softding.com</a>
+</div>
+<script th:inline="javascript"> var ctx = [[@{/}]]; var captchaType = [[${captchaType}]]; </script>
+<!-- 全局js -->
+<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<!-- 验证插件 -->
+<script src="../static/ajax/libs/validate/jquery.validate.min.js"
+        th:src="@{/ajax/libs/validate/jquery.validate.min.js}"></script>
+<script src="../static/ajax/libs/validate/messages_zh.min.js"
+        th:src="@{/ajax/libs/validate/messages_zh.min.js}"></script>
+<script src="../static/ajax/libs/layer/layer.min.js" th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<script src="../static/ajax/libs/blockUI/jquery.blockUI.js" th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script src="../static/softding/js/softding-ui.js" th:src="@{/softding/js/softding-ui.js?v=4.1.0}"></script>
+<script src="../static/softding/login.js" th:src="@{/softding/login.js}"></script>
+</body>
+</html>

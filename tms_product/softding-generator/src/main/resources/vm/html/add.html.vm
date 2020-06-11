@@ -1,0 +1,106 @@
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-${businessName}-add" method="post">
+        #foreach($column in $columns)
+            #set($field=$column.javaField)
+            #if($column.insert && !$column.pk)
+                #if(($column.usableColumn) || (!$column.superColumn))
+                    #set($parentheseIndex=$column.columnComment.indexOf("（"))
+                    #if($parentheseIndex != -1)
+                        #set($comment=$column.columnComment.substring(0, $parentheseIndex))
+                    #else
+                        #set($comment=$column.columnComment)
+                    #end
+                    #set($dictType=$column.dictType)
+                    #if($column.htmlType == "input")
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label#if($column.required) is-required#end">${comment}
+                                ：</label>
+                            <div class="col-sm-8">
+                                <input name="${field}" class="form-control easyui-textbox"
+                                       type="text" #if($column.required) data-options="required:true" #end>
+                            </div>
+                        </div>
+                    #elseif($column.htmlType == "select" && "" != $dictType)
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">${comment}：</label>
+                            <div class="col-sm-8">
+                                <select name="${field}" class="form-control easyui-combobox"
+                                        th:with="type=${@dict.getType('${dictType}')}"#if($column.required)
+                                        data-options="required:true" #end>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                            th:value="${dict.dictValue}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    #elseif($column.htmlType == "select" && $dictType)
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">${comment}：</label>
+                            <div class="col-sm-8">
+                                <select name="${field}" class="form-control m-b"#if($column.required) required#end>
+                                    <option value="">所有</option>
+                                </select>
+                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                            </div>
+                        </div>
+                    #elseif($column.htmlType == "radio" && "" != $dictType)
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">${comment}：</label>
+                            <div class="col-sm-8">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('${dictType}')}">
+                                    <input type="radio" th:id="${'${field}_' + dict.dictCode}" name="${field}"
+                                           th:value="${dict.dictValue}"
+                                           th:checked="${dict.default}"#if($column.required) required#end>
+                                    <label th:for="${'${field}_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                                </div>
+                            </div>
+                        </div>
+                    #elseif($column.htmlType == "radio" && $dictType)
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">${comment}：</label>
+                            <div class="col-sm-8">
+                                <div class="radio-box">
+                                    <input type="radio" name="${field}" value=""#if($column.required) required#end>
+                                    <label th:for="${field}" th:text="未知"></label>
+                                </div>
+                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                            </div>
+                        </div>
+                    #elseif($column.htmlType == "datetime")
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">${comment}：</label>
+                            <div class="col-sm-8">
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input name="${field}" class="form-control" placeholder="yyyy-MM-dd"
+                                           type="text"#if($column.required) required#end>
+                                </div>
+                            </div>
+                        </div>
+                    #elseif($column.htmlType == "textarea")
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">${comment}：</label>
+                            <div class="col-sm-8">
+                                <textarea name="${field}" class="form-control"#if($column.required)
+                                          required#end></textarea>
+                            </div>
+                        </div>
+                    #end
+                #end
+            #end
+        #end
+    </form>
+</div>
+<script type="text/javascript">
+    function submitHandler() {
+        $.operate.submitForm({
+            id: "form-${businessName}-add",
+            url: prefix + "/add",
+            success: function (result) {
+                $.modal.alert(result.msg, function () {
+                    $.table.refresh("List");
+                    $.modal.dialogClose();
+                })
+            }
+        });
+    }
+</script>
