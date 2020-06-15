@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="softding-admin" />
+        <module name="softding-generator" />
+        <module name="softding-system" />
+        <module name="softding-api" />
+        <module name="softding-business" />
+        <module name="softding-timer" />
+        <module name="softding-common" />
+        <module name="softding-framework" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="softding" target="1.8" />
+      <module name="softding-admin" target="1.8" />
+      <module name="softding-api" target="1.8" />
+      <module name="softding-business" target="1.8" />
+      <module name="softding-common" target="1.8" />
+      <module name="softding-framework" target="1.8" />
+      <module name="softding-generator" target="1.8" />
+      <module name="softding-system" target="1.8" />
+      <module name="softding-timer" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

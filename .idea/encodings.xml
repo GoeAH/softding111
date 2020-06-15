@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/tms_product/softding-admin/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tms_product/softding-admin/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tms_product/softding-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tms_product/softding-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tms_product/softding-business/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tms_product/softding-business/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tms_product/softding-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tms_product/softding-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tms_product/softding-framework/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tms_product/softding-generator/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tms_product/softding-generator/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tms_product/softding-system/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tms_product/softding-system/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tms_product/softding-timer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tms_product/softding-timer/src/main/resources" charset="UTF-8" />
+  </component>
+</project>
